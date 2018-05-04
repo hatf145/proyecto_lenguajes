@@ -9,17 +9,19 @@ import javafx.scene.layout.VBox;
 import sample.Classes.AFD;
 import sample.Classes.BaseClass;
 import sample.Classes.FuncionTransicion;
-
 import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
+
+import static java.lang.Thread.sleep;
 
 public class Game extends BaseClass {
     int level = 1;
     int iteracion = 0;
+    int control = 1;
+    String aux = null;
     String sequeence = "";
-    private ArrayList<String> estadosVisitados = new ArrayList<String>();
+    ArrayList<String> simonSequence = new ArrayList<>();
     FuncionTransicion funcionTransicion = new FuncionTransicion();
     AFD afd;
 
@@ -41,113 +43,146 @@ public class Game extends BaseClass {
     JFXButton gameButtonGreen;
 
     @FXML
-    public void setUp(){
+    public void setUp() throws Exception{
+        simonSequence.clear();
         for(int x = 0; x < (level * 5); x++){
             int y = (int)((Math.random() * 4) + 1);
             funcionTransicion.setFuncion("" + x, "" + (x + 1), "" + y);
-            System.out.println("Estado: " + x);
-            System.out.println("Siguiente estado: " + (x + 1));
-            System.out.println("Caracter: " + y + "\n");
+            //System.out.println("Estado: " + x);
+            //System.out.println("Siguiente estado: " + (x + 1));
+            System.out.println("Caracter: " + y);
+            simonSequence.add("" + y);
         }
         afd = new AFD(funcionTransicion, "" + 0);
+        iteracion = 0;
+        control = 1;
+        sequeence = "";
+        showSequence();
+    }
+
+    public void showSequence() throws Exception{
+        for(int x = 0; x < control; x++){
+            aux = null;
+            aux = simonSequence.get(x);
+            System.out.println(simonSequence);
+            switch (aux){
+                case "1":
+                    gameButtonRed.setStyle("");
+                    break;
+                case "2":
+                    gameButtonYellow.requestFocus();
+                    break;
+                case "3":
+                    gameButtonBlue.requestFocus();
+                    break;
+                case "4":
+                    gameButtonGreen.requestFocus();
+                    break;
+            }
+            gameButtonRed.getParent().requestFocus();
+        }
     }
 
     @FXML
-    public void onClickRed(){
-        iteracion += 1;
+    public void onClickRed() throws Exception{
+        iteracion = iteracion + 1;
         if(iteracion < level * 5) {
             sequeence = sequeence + "1";
-            System.out.println(sequeence);
-            if(afd.valida(sequeence, estadosVisitados)){
-                System.out.println("Yas!");
+            if(afd.valida(sequeence)){
+                if(iteracion == control) {
+                    System.out.println("YAS! - " + sequeence);
+                    sequeence = "";
+                    control = control + 1;
+                    iteracion = 0;
+                    showSequence();
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "You loose this level!", "Fail!", JOptionPane.ERROR_MESSAGE);
                 level = 1;
-                iteracion = 0;
-                sequeence = "";
                 setUp();
             }
         }
         else {
             JOptionPane.showMessageDialog(null, "You win this level!", "Success!", JOptionPane.INFORMATION_MESSAGE);
             level += 1;
-            iteracion = 0;
-            sequeence = "";
             setUp();
         }
     }
 
     @FXML
-    public void onClickYellow(){
-        iteracion += 1;
+    public void onClickYellow() throws Exception{
+        iteracion = iteracion + 1;
         if(iteracion < level * 5) {
             sequeence = sequeence + "2";
-            System.out.println(sequeence);
-            if(afd.valida(sequeence, estadosVisitados)){
-                System.out.println("Yas!");
+            if(afd.valida(sequeence)){
+                if(iteracion == control) {
+                    System.out.println("YAS! - " + sequeence);
+                    sequeence = "";
+                    control = control + 1;
+                    iteracion = 0;
+                    showSequence();
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "You loose this level!", "Fail!", JOptionPane.ERROR_MESSAGE);
                 level = 1;
-                iteracion = 0;
-                sequeence = "";
                 setUp();
             }
         }
         else {
             JOptionPane.showMessageDialog(null, "You win this level!", "Success!", JOptionPane.INFORMATION_MESSAGE);
             level += 1;
-            iteracion = 0;
-            sequeence = "";
             setUp();
         }
     }
 
     @FXML
-    public void onClickBlue(){
-        iteracion += 1;
+    public void onClickBlue() throws Exception{
+        iteracion = iteracion + 1;
         if(iteracion < level * 5) {
             sequeence = sequeence + "3";
-            System.out.println(sequeence);
-            if(afd.valida(sequeence, estadosVisitados)){
-                System.out.println("Yas!");
+            if(afd.valida(sequeence)){
+                if(iteracion == control) {
+                    System.out.println("YAS! - " + sequeence);
+                    sequeence = "";
+                    control = control + 1;
+                    iteracion = 0;
+                    showSequence();
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "You loose this level!", "Fail!", JOptionPane.ERROR_MESSAGE);
                 level = 1;
-                iteracion = 0;
-                sequeence = "";
                 setUp();
             }
         }
         else {
             JOptionPane.showMessageDialog(null, "You win this level!", "Success!", JOptionPane.INFORMATION_MESSAGE);
             level += 1;
-            iteracion = 0;
-            sequeence = "";
             setUp();
         }
     }
 
     @FXML
-    public void onClickGreen(){
-        iteracion += 1;
+    public void onClickGreen() throws Exception{
+        iteracion = iteracion + 1;
         if(iteracion < level * 5) {
             sequeence = sequeence + "4";
-            System.out.println(sequeence);
-            if(afd.valida(sequeence, estadosVisitados)){
-                System.out.println("Yas!");
+            if(afd.valida(sequeence)){
+                if(iteracion == control) {
+                    System.out.println("YAS! - " + sequeence);
+                    sequeence = "";
+                    control = control + 1;
+                    iteracion = 0;
+                    showSequence();
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "You loose this level!", "Fail!", JOptionPane.ERROR_MESSAGE);
                 level = 1;
-                iteracion = 0;
-                sequeence = "";
                 setUp();
             }
         }
         else {
             JOptionPane.showMessageDialog(null, "You win this level!", "Success!", JOptionPane.INFORMATION_MESSAGE);
             level += 1;
-            iteracion = 0;
-            sequeence = "";
             setUp();
         }
     }

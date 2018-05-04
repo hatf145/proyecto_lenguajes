@@ -20,14 +20,11 @@ public class AFD {
     }
 
     //Método para evaluar una cadena dada con el AFD.
-    public boolean valida(String cadena, ArrayList<String> estadosVisitados){
+    public boolean valida(String cadena){
         String estadoActual = estadoInicial;    //Iniciamos el proceso a partir del estado incial del AFD.
 
         for(int x = 0; x < cadena.length(); x++){ //Vamos a recorrer los caracteres de la cadena dada.
             String c = "" + cadena.charAt(x);       //Obtemenos el caracter a evaluar.
-            estadosVisitados.add(estadoActual);     //Agregamos a los estados visitados el estado en el que estamos.
-                                                    //Saber por qué estados pasamos no es necesario para el funcionamiento del
-                                                    //AFD, pero resulta práctico saberlo cuando nos muestra los resultados.
 
             /*
             Llamamos al metodo "transición" de nuestra función de transición para saber a donde nos movemos. Dicho mpetodo nos
@@ -40,7 +37,6 @@ public class AFD {
                 return false;
             }
         }
-        estadosVisitados.add(estadoActual);
         /*
         Ya que recorrimos todos los caracteres de la cadena, sólo necesitamos saber si el estado en el que teminamos
         es final o no.
