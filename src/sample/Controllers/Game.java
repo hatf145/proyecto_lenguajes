@@ -1,11 +1,17 @@
 package sample.Controllers;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.SequentialTransition;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import sample.Classes.AFD;
 import sample.Classes.BaseClass;
 import sample.Classes.FuncionTransicion;
@@ -13,12 +19,12 @@ import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static java.lang.Thread.sleep;
-
 public class Game extends BaseClass {
     int level = 1;
     int iteracion = 0;
     int control = 1;
+    Timeline timeline;
+    SequentialTransition sequentialTransition;
     String aux = null;
     String sequeence = "";
     ArrayList<String> simonSequence = new ArrayList<>();
@@ -34,16 +40,16 @@ public class Game extends BaseClass {
     @FXML
     JFXButton gameStart;
     @FXML
-    JFXButton gameButtonRed;
+    Button gameButtonRed;
     @FXML
-    JFXButton gameButtonYellow;
+    Button gameButtonYellow;
     @FXML
-    JFXButton gameButtonBlue;
+    Button gameButtonBlue;
     @FXML
-    JFXButton gameButtonGreen;
+    Button gameButtonGreen;
 
     @FXML
-    public void setUp() throws Exception{
+    public void setUp(){
         simonSequence.clear();
         for(int x = 0; x < (level * 5); x++){
             int y = (int)((Math.random() * 4) + 1);
@@ -60,31 +66,44 @@ public class Game extends BaseClass {
         showSequence();
     }
 
-    public void showSequence() throws Exception{
+    public void showSequence(){
+        timeline = null;
+        sequentialTransition = new SequentialTransition();
         for(int x = 0; x < control; x++){
             aux = null;
             aux = simonSequence.get(x);
-            System.out.println(simonSequence);
-            switch (aux){
+            switch (aux) {
                 case "1":
-                    gameButtonRed.setStyle("");
+                    timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> gameButtonRed.setStyle("-fx-background-color: RED")),
+                            new KeyFrame(Duration.millis(300), evt -> gameButtonRed.setStyle("-fx-background-color: #ff6666")));
+                    timeline.setCycleCount(1);
+                    sequentialTransition.getChildren().add(timeline);
                     break;
                 case "2":
-                    gameButtonYellow.requestFocus();
+                    timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> gameButtonYellow.setStyle("-fx-background-color: YELLOW")),
+                            new KeyFrame(Duration.millis(300), evt -> gameButtonYellow.setStyle("-fx-background-color: #ffff99")));
+                    timeline.setCycleCount(1);
+                    sequentialTransition.getChildren().add(timeline);
                     break;
                 case "3":
-                    gameButtonBlue.requestFocus();
+                    timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> gameButtonBlue.setStyle("-fx-background-color: BLUE")),
+                            new KeyFrame(Duration.millis(300), evt -> gameButtonBlue.setStyle("-fx-background-color: #6666ff")));
+                    timeline.setCycleCount(1);
+                    sequentialTransition.getChildren().add(timeline);
                     break;
                 case "4":
-                    gameButtonGreen.requestFocus();
+                    timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> gameButtonGreen.setStyle("-fx-background-color: GREEN")),
+                            new KeyFrame(Duration.millis(300), evt -> gameButtonGreen.setStyle("-fx-background-color: #66b266")));
+                    timeline.setCycleCount(1);
+                    sequentialTransition.getChildren().add(timeline);
                     break;
             }
-            gameButtonRed.getParent().requestFocus();
         }
+        sequentialTransition.play();
     }
 
     @FXML
-    public void onClickRed() throws Exception{
+    public void onClickRed(){
         iteracion = iteracion + 1;
         if(iteracion < level * 5) {
             sequeence = sequeence + "1";
@@ -110,7 +129,7 @@ public class Game extends BaseClass {
     }
 
     @FXML
-    public void onClickYellow() throws Exception{
+    public void onClickYellow(){
         iteracion = iteracion + 1;
         if(iteracion < level * 5) {
             sequeence = sequeence + "2";
@@ -136,7 +155,7 @@ public class Game extends BaseClass {
     }
 
     @FXML
-    public void onClickBlue() throws Exception{
+    public void onClickBlue(){
         iteracion = iteracion + 1;
         if(iteracion < level * 5) {
             sequeence = sequeence + "3";
@@ -162,7 +181,7 @@ public class Game extends BaseClass {
     }
 
     @FXML
-    public void onClickGreen() throws Exception{
+    public void onClickGreen(){
         iteracion = iteracion + 1;
         if(iteracion < level * 5) {
             sequeence = sequeence + "4";
