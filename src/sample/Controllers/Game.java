@@ -1,7 +1,6 @@
 package sample.Controllers;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
@@ -12,12 +11,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-import sample.Classes.AFD;
+import sample.Classes.AFN;
 import sample.Classes.BaseClass;
 import sample.Classes.FuncionTransicion;
 import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
+
+//TODO LO QUE NO ESTÉ COMENTADO ES PARTE DE LA INTERFAZ GRÁFICA O ANIMACIONES
 
 public class Game extends BaseClass {
     int level = 1;
@@ -29,7 +30,7 @@ public class Game extends BaseClass {
     String sequeence = "";
     ArrayList<String> simonSequence = new ArrayList<>();
     FuncionTransicion funcionTransicion = new FuncionTransicion();
-    AFD afd;
+    AFN AFN;
 
     @FXML
     AnchorPane gameRoot;
@@ -50,29 +51,28 @@ public class Game extends BaseClass {
 
     @FXML
     public void setUp(){
-        simonSequence.clear();
-        for(int x = 0; x < (level * 5); x++){
-            int y = (int)((Math.random() * 4) + 1);
-            funcionTransicion.setFuncion("" + x, "" + (x + 1), "" + y);
-            //System.out.println("Estado: " + x);
-            //System.out.println("Siguiente estado: " + (x + 1));
-            System.out.println("Caracter: " + y);
-            simonSequence.add("" + y);
+        simonSequence.clear(); //Limpiamos la secuencia de colores.
+        for(int x = 0; x < (level * 5); x++){ //En este ciclo creamos un objeto FuncionTransición que tendrá 5X funciones de transición, 6 estados.
+            int y = (int)((Math.random() * 4) + 1); //Elegimos un simbolo al azar.
+            funcionTransicion.setFuncion("" + x,    //El ultimo estado no tendrá transición alguna.
+                    "" + (x + 1), "" + y); //Los resultados se deben guardar como String.
+            simonSequence.add("" + y); //Para no tener que iterar el automata en ciertos casos, tenemos un ArrayList con la secuencia.
+            //Este ArrayList NO se usa para validad la entrada del usuario, esa se realiza a través del automata.
         }
-        afd = new AFD(funcionTransicion, "" + 0);
-        iteracion = 0;
-        control = 1;
-        sequeence = "";
-        showSequence();
+        AFN = new AFN(funcionTransicion, "" + 0); //Creamos el automata a partir de la función de transición que definimos.
+        iteracion = 0; //La iteración actual del juego se reinicia.
+        control = 1; //El control de reinicia.
+        sequeence = ""; //La variable que contiene la entrada del usuario se reincia.
+        showSequence(); //Mostramos el primer color.
     }
 
-    public void showSequence(){
+    private void showSequence(){
         timeline = null;
         sequentialTransition = new SequentialTransition();
-        for(int x = 0; x < control; x++){
+        for(int x = 0; x < control; x++){ //Vamos a mostrar la secuencia de colores sólo hasta el punto que el jugador ha llegado.
             aux = null;
-            aux = simonSequence.get(x);
-            switch (aux) {
+            aux = simonSequence.get(x); //Obtenemos un caracter de la secuencia. Aquí utilizamos el ArrayList.
+            switch (aux) { //Depende del color obtenido, "iluminamos" el botón correspondiente.
                 case "1":
                     timeline = new Timeline(new KeyFrame(Duration.seconds(1), evt -> gameButtonRed.setStyle("-fx-background-color: RED")),
                             new KeyFrame(Duration.millis(300), evt -> gameButtonRed.setStyle("-fx-background-color: #ff6666")));
@@ -102,26 +102,34 @@ public class Game extends BaseClass {
         sequentialTransition.play();
     }
 
+    /**
+     * Todos los botones se comportan igual. Sólo está comentado este.
+     */
     @FXML
-    public void onClickRed(){
-        iteracion = iteracion + 1;
-        if(iteracion < level * 5) {
-            sequeence = sequeence + "1";
-            if(afd.valida(sequeence)){
-                if(iteracion == control) {
-                    System.out.println("YAS! - " + sequeence);
-                    sequeence = "";
-                    control = control + 1;
-                    iteracion = 0;
-                    showSequence();
+    public void onClickRed(){ //Se presionó el botón ROJO.
+        iteracion = iteracion + 1; //Aumentamos la iteración del juego.
+        if(iteracion < level * 5) { //Si no se han presionado 5X botones, no se ha completado el nivel.
+            sequeence = sequeence + "1"; //Agregamos el simbolo correspondiente a la sequencia de entrada.
+            if(AFN.valida(sequeence)){
+                /**
+                 * La validación de la cadena la lleva a cabo el AFN, que devuelve TRUE si y solo sí, ocurrio una transición
+                 * al consumir cada uno de los simbolos de la secuencia.
+                 * En cuanto una transición no suceda, es decir, no esté definida para el estado y simbolo en cuestión, el
+                 * AFN regresa FALSE.
+                 */
+                if(iteracion == control) { //Control represneta el numero de entradas del usuario que estamos esperando.
+                    sequeence = ""; //Limpiamos la entrada del usuario.
+                    control = control + 1; //Aumentamos el control, puesto que ahora esperaremos un color más.
+                    iteracion = 0; //Reiniciamos las iteraciones.
+                    showSequence(); //Mostramos la secuencia, ahora mostrará un simbolo.
                 }
-            } else {
+            } else { //Si el AFN regresó FALSE, el usuario falló y el juego entero se reinicia (no sólo el nivel).
                 JOptionPane.showMessageDialog(null, "You loose this level!", "Fail!", JOptionPane.ERROR_MESSAGE);
                 level = 1;
                 setUp();
             }
         }
-        else {
+        else { //Si ya se presionaron 5X botones, el nivel fue superado.
             JOptionPane.showMessageDialog(null, "You win this level!", "Success!", JOptionPane.INFORMATION_MESSAGE);
             level += 1;
             setUp();
@@ -133,7 +141,7 @@ public class Game extends BaseClass {
         iteracion = iteracion + 1;
         if(iteracion < level * 5) {
             sequeence = sequeence + "2";
-            if(afd.valida(sequeence)){
+            if(AFN.valida(sequeence)){
                 if(iteracion == control) {
                     System.out.println("YAS! - " + sequeence);
                     sequeence = "";
@@ -159,7 +167,7 @@ public class Game extends BaseClass {
         iteracion = iteracion + 1;
         if(iteracion < level * 5) {
             sequeence = sequeence + "3";
-            if(afd.valida(sequeence)){
+            if(AFN.valida(sequeence)){
                 if(iteracion == control) {
                     System.out.println("YAS! - " + sequeence);
                     sequeence = "";
@@ -185,7 +193,7 @@ public class Game extends BaseClass {
         iteracion = iteracion + 1;
         if(iteracion < level * 5) {
             sequeence = sequeence + "4";
-            if(afd.valida(sequeence)){
+            if(AFN.valida(sequeence)){
                 if(iteracion == control) {
                     System.out.println("YAS! - " + sequeence);
                     sequeence = "";

@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,7 +8,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.Main">
+<AnchorPane fx:id="mainRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.WelcomeScreen">
    <children>
       <VBox fx:id="mainVBox" alignment="CENTER" layoutX="416.0" layoutY="230.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
          <children>
@@ -42,28 +36,6 @@
                      </stops>
                   </LinearGradient>
                </ripplerFill>
-            </JFXButton>
-            <JFXButton fx:id="mainMore" buttonType="RAISED" onAction="#goToMore" style="-fx-background-color: #05005b;" text="MÁS" textFill="WHITE">
-               <font>
-                  <Font name="Microsoft JhengHei UI" size="20.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </VBox.margin>
-               <ripplerFill>
-                  <LinearGradient cycleMethod="REPEAT" endX="1.0" endY="1.0">
-                     <stops>
-                        <Stop color="#000000ab" />
-                        <Stop color="#000000ab" offset="0.007246376811594203" />
-                        <Stop color="WHITE" offset="1.0" />
-                     </stops>
-                  </LinearGradient>
-               </ripplerFill>
-            </JFXButton>
-            <JFXButton fx:id="mainOut" buttonType="RAISED" onAction="#goOut" ripplerFill="BLACK" text="SALIR">
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </VBox.margin>
             </JFXButton>
          </children>
       </VBox>

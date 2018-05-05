@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class SimonDice extends Application {
+public class Main extends Application {
     Scene scene;
 
     @Override
@@ -16,7 +16,7 @@ public class SimonDice extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Main.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/FXML/Main.fxml"));
         primaryStage.setTitle("Proyecto Final");
         scene.setRoot(loader.load());
         ((BaseClass)loader.getController()).setApplicationInstance(this);

@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: Proyecto Lenguajes/src/sample/Classes
+Main-Class: sample.Classes.Main
+

@@ -9,7 +9,7 @@ import sample.Classes.BaseClass;
 
 import java.io.IOException;
 
-public class Main extends BaseClass {
+public class WelcomeScreen extends BaseClass {
 
     @FXML
     AnchorPane mainRoot;
@@ -19,11 +19,6 @@ public class Main extends BaseClass {
     JFXButton mainTitle;
     @FXML
     JFXButton mainStart;
-    @FXML
-    JFXButton mainMore;
-    @FXML
-    JFXButton mainOut;
-
 
     @FXML
     public void goToGame() throws IOException{
@@ -31,15 +26,5 @@ public class Main extends BaseClass {
         getApplicationInstance().setNewRoot(loader.load());
         ((BaseClass)loader.getController()).setApplicationInstance(getApplicationInstance());
     }
-
-    @FXML
-    public void goToMore(){
-
-    }
-
-    @FXML
-    public void goOut(){
-    }
-
 
 }

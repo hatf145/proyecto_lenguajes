@@ -3,25 +3,25 @@ package sample.Classes;
 import java.util.ArrayList;
 
 /**
- * Esta clase representa la abstracción de un AFD.
+ * Esta clase representa la abstracción de un AFN.
  */
-public class AFD {
+public class AFN {
     /**
-     * Atributos de la clase, correspondientes a los atributos de un AFD; se omiten los elementos del alfabeto y
+     * Atributos de la clase, correspondientes a los atributos de un AFN; se omiten los elementos del alfabeto y
      * el conjunto de estados que lo componen puesto que están implicitos en la función de trancisión.
      */
     private FuncionTransicion funcionTransicion;
     private String estadoInicial;
 
     //Constructor para determinar el valor de los atributos de la instancia.
-    public AFD(FuncionTransicion funcionTransicion, String estadoInicial){
+    public AFN(FuncionTransicion funcionTransicion, String estadoInicial){
         this.funcionTransicion = funcionTransicion;
         this.estadoInicial = estadoInicial;
     }
 
-    //Método para evaluar una cadena dada con el AFD.
+    //Método para evaluar una cadena dada con el AFN.
     public boolean valida(String cadena){
-        String estadoActual = estadoInicial;    //Iniciamos el proceso a partir del estado incial del AFD.
+        String estadoActual = estadoInicial;    //Iniciamos el proceso a partir del estado incial del AFN.
 
         for(int x = 0; x < cadena.length(); x++){ //Vamos a recorrer los caracteres de la cadena dada.
             String c = "" + cadena.charAt(x);       //Obtemenos el caracter a evaluar.

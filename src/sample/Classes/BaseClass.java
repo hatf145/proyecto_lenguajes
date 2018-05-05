@@ -1,13 +1,13 @@
 package sample.Classes;
 
 public class BaseClass {
-    private SimonDice appInstance = null;
+    private Main appInstance = null;
 
-    public SimonDice getApplicationInstance() {
+    public Main getApplicationInstance() {
         return appInstance;
     }
 
-    public void setApplicationInstance(SimonDice applicationInstance) {
+    public void setApplicationInstance(Main applicationInstance) {
         appInstance = applicationInstance;
     }
 
